@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('habari_mpya', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary()->autoIncrement();
-            $table->enum('category',['habari','taarifa','matukio','video','about','vision','members','team'])->default('habari');
+            $table->enum('category',['habari','taarifa','matukio','video','about','vision','members','team',
+                'traditional-citizen','traditional-noncitizen','alternatively-citizen','alternatively-noncitizen',
+                'massage-citizen','medicine-seller','assistant-alternative','assistant-traditional',
+                'traditional-medicine-shrine','traditional-medicine-clinic','alternatively-medicine-clinic',
+                'traditional-health-centre','alternative-health-centre','traditional-medicine-hospital',
+                'alternative-medicine-hospital','traditional-medicine-store',
+                'traditional-medicine-registration','alternative-medicine-registration',
+                'enlisting-traditional-medicine','importing-medicine','exporting-medicine'])->default('habari');
             $table->string('title');
             $table->string('short_description');
             $table->text('body');

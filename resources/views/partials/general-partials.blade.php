@@ -71,5 +71,43 @@
                 </tr>
             @endforeach
         @endif
+    @elseif($section == 'contact_us')
+        @if(count($data) >0)
+            @php($counter = 0)
+            @foreach($data as $row)
+                @php($counter++)
+                <tr>
+                    <td>{{$counter}}</td>
+                    <td>{{ucwords(strtolower($row->first_name))}}</td>
+                    <td>{{ucwords(strtolower($row->last_name))}}</td>
+                    <td>{{strtolower($row->email)}}</td>
+                    <td>{{ucwords($row->subject)}}</td>
+                    <td>{{$row->status}}</td>
+                    @if($row->read == 'seen')
+                        <td><span class="badge badge-success bg-success">Attended</span></td>
+                    @else
+                        <td><span class="badge badge-danger bg-danger">Un Attended</span></td>
+                    @endif
+
+                    <td>{{date('d-m-Y h:i', strtotime($row->created_at))}}</td>
+                    <td>{{ \App\Http\Controllers\v1\AdminController::getIssuedByUser($row->seen_by) }}</td>
+                    <td>
+                        @if($row->seen_at != '')
+                            {{date('d-m-Y', strtotime($row->seen_at))}}
+                        @endif
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info btn-sm" id="read-content-section-data-link" data-toggle="modal" data-target="#read-user-feedback-modal" onclick="processLink(this)" data-readata="{{$row->uuid}}">Read <i class="fa fa-eye"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" id="remove-feedback-section-data-link" onclick="processLink(this)" data-contentdata="{{$row->uuid}}">Remove</button>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
+    @elseif($section == 'read_feedback_section')
+        @if(count($data) >0)
+            <h5>From: {{$data->first()->email}}</h5>
+            <p>Message:</p>
+            <p>{{$data->first()->message}}</p>
+        @endif
     @endif
 @endif

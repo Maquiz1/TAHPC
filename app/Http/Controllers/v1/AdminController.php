@@ -89,6 +89,11 @@ class AdminController extends Controller{
         return view('admin.admin');
     }
 
+    //function that return dashboard page
+    public function contactUs(request $request){
+        return view('admin.contact-us');
+    }
+
     //function that authenticate user
     public function authUser(request $request) {
         $request->validate([
@@ -384,6 +389,27 @@ class AdminController extends Controller{
     //slider section call back
     public function contentSectionCallBack(request $request){
         return response()->json(HabariMpyaModel::contentSectionCallBack());
+    }
+
+    //slider section call back
+    public function contactUsCallBack(request $request){
+        return response()->json(ContactUsModel::contentSectionCallBack());
+    }
+
+    public function contactUsCount(request $request){
+        $data = DB::table('contact_us')->select('*')->where('status', '=', 'active')
+            ->where('read', '=', 'unseen')
+            ->count();
+        echo json_encode($data);
+    }
+
+    //slider section call back
+    public function readFeedBack(request $request){
+        $request->validate([
+            'elementKey'=>'required|string',
+        ]);
+        $elementKey = $request->input('elementKey');
+        return response()->json(ContactUsModel::readFeedBack($elementKey));
     }
 
     //slider section call back
@@ -733,7 +759,618 @@ class AdminController extends Controller{
             ->where('position','=','center')
             ->get();
 
-        return view('pages.registration', ['title'=>'Contact Us', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center]);
+        $traditionalCitizen = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-citizen')
+            ->orderBy('id','desc')->first();
+
+
+        return view('pages.registration', ['title'=>'Traditional Citizen', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,
+            'traditionalCitizen'=>$traditionalCitizen]);
+    }
+
+    public function traditionalNonCitizenIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $traditionalCitizen = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-noncitizen')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.massage-citizen', ['title'=>'Traditional NonCitizen', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,
+            'pageContent'=>$traditionalCitizen]);
+    }
+
+    public function alternativelyCitizenIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $alternativeCitizen = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternatively-citizen')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.alternative-citizen', ['title'=>'Alternatively Citizen', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center, 'alternativeCitizen'=>$alternativeCitizen]);
+    }
+
+    public function alternativelyNonCitizenIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternatively-noncitizen')
+            ->orderBy('id','asc')->first();
+
+        return view('pages.alternative-non-citizen', ['title'=>'Alternative Non Citizen', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,
+            'pageContent'=>$pageContent]);
+    }
+
+    public function massageCitizenIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','massage-citizen')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.massage-citizen', ['title'=>'Massage Citizen', 'left'=>$leftLogo,'right'=>$rightLogo,
+            'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function medicineSeller(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','medicine-seller')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.massage-citizen', ['title'=>'Traditional Medicine Seller', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,
+            'pageContent'=>$pageContent]);
+    }
+
+    public function assistantAlternativeIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','assistant-alternative')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.massage-citizen', ['title'=>'Assistant Alternatively Health Practitioner ', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+
+    public function assistantTraditionalIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','assistant-traditional')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.massage-citizen', ['title'=>'Assistant Traditional Health Practitioner', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function traditionalMedicineShrineIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-medicine-shrine')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Traditional Medicine Shrine', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function traditionalMedicineClinicIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-medicine-clinic')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Traditional Medicine Clinic', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function alternativelyMedicineClinicIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternatively-medicine-clinic')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Alternatively Medicine Clinic ', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function traditionalMedicineHealthCentreIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-health-centre')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Traditional Medicine Health Centre', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
+    }
+
+
+    public function alternativelyMedicineHealthCentre(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternative-health-centre')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Alternatively Medicine Health Centre', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function traditionalMedicineHospital(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-medicine-hospital')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Traditional Medicine Hospital', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function alternativeMedicineHospital(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternative-medicine-hospital')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Alternative Medicine Hospital', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+    public function traditionalMedicineStore(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+          $pageContent = DB::table('habari_mpya')
+              ->select('*')
+              ->where('status','=','active')
+              ->where('category','=','traditional-medicine-store')
+              ->orderBy('id','desc')->first();
+
+        return view('pages.facilities', ['title'=>'Traditional Medicine Store', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center,'pageContent'=>$pageContent]);
+    }
+
+
+    public function registrationTraditionalMedicine(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','traditional-medicine-registration')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.medicines', ['title'=>'Registration Of Traditional Medicines', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
+    }
+
+    public function registrationAlternativeMedicine(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','alternative-medicine-registration')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.medicines', ['title'=>'Registration Of Alternative Medicines ', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
+    }
+
+    public function enlistingTraditionalMedicines(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','enlisting-traditional-medicine')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.medicines', ['title'=>'Enlisting Traditional Medicines', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
+    }
+
+
+    public function importingMedicines(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','importing-medicine')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.medicines', ['title'=>'Importing Medicines', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
+    }
+
+    public function exportingMedicines(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        $pageContent = DB::table('habari_mpya')
+            ->select('*')
+            ->where('status','=','active')
+            ->where('category','=','exporting-medicine')
+            ->orderBy('id','desc')->first();
+
+        return view('pages.medicines', ['title'=>'Exporting Medicines', 'left'=>$leftLogo,
+            'right'=>$rightLogo,'center'=>$center, 'pageContent'=>$pageContent]);
     }
 
     public function licencingIndex(Request $request){

@@ -1,4 +1,15 @@
 <!-- Modal -->
+<div class="modal fade" id="read-user-feedback-modal" tabindex="-1" role="dialog" aria-labelledby="top-navbar-modal" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="read-user-feedback"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
 <div class="modal fade" id="restricted-area-modal" tabindex="-1" role="dialog" aria-labelledby="restricted-area-modal" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -205,12 +216,33 @@
                     <div class="form-group row mb-4">
                         <div class="col-lg-12">
                             <label for="category-page">Select Page</label>
-                            <select name="category" id="category-page" class="form-select-lg form-control" required="required">
+                            <select name="category" id="category-page" class="form-select-lg form-control" required="required" style="width:100%;">
                                 <option value=""></option>
                                 <option value="about">About Us</option>
                                 <option value="vision">Vision & Mission</option>
                                 <option value="members">Council Members</option>
                                 <option value="team">Management Team</option>
+                                <option value="traditional-citizen">Traditional Citizen</option>
+                                <option value="traditional-noncitizen">Traditional NonCitizen</option>
+                                <option value="alternatively-citizen">Alternatively Citizen</option>
+                                <option value="alternatively-noncitizen">Alternatively NonCitizen</option>
+                                <option value="massage-citizen">Massage Citizen</option>
+                                <option value="medicine-seller">Medicine Seller</option>
+                                <option value="assistant-alternative">Assistant Alternative</option>
+                                <option value="assistant-traditional">Assistant Traditional</option>
+                                <option value="traditional-medicine-shrine">Traditional Medicine Shrine</option>
+                                <option value="traditional-medicine-clinic">Traditional Medicine Clinic</option>
+                                <option value="alternatively-medicine-clinic">Alternatively Medicine Clinic</option>
+                                <option value="traditional-health-centre">Traditional Health Centre</option>
+                                <option value="alternative-health-centre">Alternative Health Centre</option>
+                                <option value="traditional-medicine-hospital">Traditional Medicine Hospital</option>
+                                <option value="alternative-medicine-hospital">Alternative Medicine Hospital</option>
+                                <option value="traditional-medicine-store">Traditional Medicine Store</option>
+                                <option value="traditional-medicine-registration">Traditional Medicine Registration</option>
+                                <option value="alternative-medicine-registration">Alternative Medicine Registration</option>
+                                <option value="enlisting-traditional-medicine">Enlisting Traditional Medicine</option>
+                                <option value="importing-medicine">Importing Medicine</option>
+                                <option value="exporting-medicine">Exporting Medicine</option>
                             </select>
                         </div>
                     </div>

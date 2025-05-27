@@ -93,16 +93,194 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('registration') }}" @class(['nav-link', 'active' => request()->routeIs('registration')]) aria-current="{{ request()->routeIs('registration') ? 'page' : '' }}">
-                                        Registrations
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->routeIs('traditional-citizen', 'traditional-noncitizen',
+                                                    'alternatively-citizen', 'alternatively-noncitizen','massage-citizen',
+                                                    'assistant-traditional','assistant-traditional','assistant-alternatively',
+                                                    'traditional-medicine-seller') ? 'active' : '' }}" href="#section_5"
+                                       id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                                       aria-expanded="false" >
+                                        Registrations <i class="fas fa-caret-down ms-1"></i>
                                     </a>
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                        <li>
+                                            <a href="{{ route('traditional-citizen') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-citizen') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-citizen') ? 'page' : '' }}">
+                                                Traditional health practitioner(citizen)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-noncitizen') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-noncitizen') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-noncitizen') ? 'page' : '' }}">
+                                                Traditional health practitioner (Non citizen)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('alternatively-citizen') }}"
+                                               class="dropdown-item {{ request()->routeIs('alternatively-citizen') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('alternatively-citizen') ? 'page' : '' }}">
+                                                Alternatively health practitioner (citizen)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('alternatively-noncitizen') }}"
+                                               class="dropdown-item {{ request()->routeIs('alternatively-noncitizen') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('alternatively-noncitizen') ? 'page' : '' }}">
+                                                Alternatively practitioner (Non citizen)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('massage-citizen') }}"
+                                               class="dropdown-item {{ request()->routeIs('massage-citizen') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('massage-citizen') ? 'page' : '' }}">
+                                                Massage health practitioner (Citizen)
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-seller') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-seller') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-seller') ? 'page' : '' }}">
+                                                Traditional Medicine Seller
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('assistant-alternatively') }}"
+                                               class="dropdown-item {{ request()->routeIs('assistant-alternatively') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('assistant-alternatively') ? 'page' : '' }}">
+                                                Assistant Alternatively health practitioner
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('assistant-traditional') }}"
+                                               class="dropdown-item {{ request()->routeIs('assistant-traditional') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('assistant-traditional') ? 'page' : '' }}">
+                                                Assistant Traditional health practitioner
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('licensing') }}" @class(['nav-link', 'active' => request()->routeIs('licensing')]) aria-current="{{ request()->routeIs('licensing') ? 'page' : '' }}">
-                                        Licencing
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->routeIs('traditional-medicine-shrine','traditional-medicine-clinic',
+                                                                'alternatively-medicine-clinic','traditional-medicine-health-centre',
+                                                                'alternatively-medicine-health-centre',
+                                                                'traditional-medicine-hospital','alternative-medicine-hospital',
+                                                                'traditional-medicine-store') ? 'active' : '' }}" href="#section_5"
+                                       id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                                       aria-expanded="false" >
+                                        Facilities <i class="fas fa-caret-down ms-1"></i>
                                     </a>
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-shrine') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-shrine') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-shrine') ? 'page' : '' }}">
+                                                Traditional medicine Shrine
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-clinic') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-clinic') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-clinic') ? 'page' : '' }}">
+                                                Traditional medicine Clinic
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('alternatively-medicine-clinic') }}"
+                                               class="dropdown-item {{ request()->routeIs('alternatively-medicine-clinic') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('alternatively-medicine-clinic') ? 'page' : '' }}">
+                                                Alternatively medicine Clinic
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-health-centre') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-health-centre') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-health-centre') ? 'page' : '' }}">
+                                                Traditional Medicine Health Centre
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('alternatively-medicine-health-centre') }}"
+                                               class="dropdown-item {{ request()->routeIs('alternatively-medicine-health-centre') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('alternatively-medicine-health-centre') ? 'page' : '' }}">
+                                                Alternatively Medicine Health Centre
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-hospital') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-hospital') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-hospital') ? 'page' : '' }}">
+                                                Traditional Medicine Hospital
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('alternative-medicine-hospital') }}"
+                                               class="dropdown-item {{ request()->routeIs('alternative-medicine-hospital') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('alternative-medicine-hospital') ? 'page' : '' }}">
+                                                Alternative medicine Hospital
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('traditional-medicine-store') }}"
+                                               class="dropdown-item {{ request()->routeIs('traditional-medicine-store') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('traditional-medicine-store') ? 'page' : '' }}">
+                                                Traditional Medicine Store
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->routeIs('registration-traditional-medicine',
+                                                         'registration-alternative-medicine','importing-medicines',
+                                                         'enlisting-traditional-medicines','exporting-medicines') ? 'active' : '' }}" href="#section_5"
+                                       id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                                       aria-expanded="false" >
+                                        Medicines <i class="fas fa-caret-down ms-1"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                        <li>
+                                            <a href="{{ route('registration-traditional-medicine') }}"
+                                               class="dropdown-item {{ request()->routeIs('registration-traditional-medicine') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('registration-traditional-medicine') ? 'page' : '' }}">
+                                                Registration Of Traditional Medicines
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('registration-alternative-medicine') }}"
+                                               class="dropdown-item {{ request()->routeIs('registration-alternative-medicine') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('registration-alternative-medicine') ? 'page' : '' }}">
+                                                Registration Of Alternative Medicines
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('enlisting-traditional-medicines') }}"
+                                               class="dropdown-item {{ request()->routeIs('enlisting-traditional-medicines') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('enlisting-traditional-medicines') ? 'page' : '' }}">
+                                                Enlisting Traditional Medicines
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('importing-medicines') }}"
+                                               class="dropdown-item {{ request()->routeIs('importing-medicines') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('importing-medicines') ? 'page' : '' }}">
+                                               Importing Medicines
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('exporting-medicines') }}"
+                                               class="dropdown-item {{ request()->routeIs('exporting-medicines') ? 'active' : '' }}"
+                                               aria-current="{{ request()->routeIs('exporting-medicines') ? 'page' : '' }}">
+                                               Exporting Medicines
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+{{--                                <li class="nav-item">--}}
+{{--                                    <a href="{{ route('licensing') }}" @class(['nav-link', 'active' => request()->routeIs('licensing')]) aria-current="{{ request()->routeIs('licensing') ? 'page' : '' }}">--}}
+{{--                                        Licencing--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#section_7"
                                        id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
@@ -153,47 +331,41 @@
                     </div>
                     <div class="col-lg-2 col-md-6 col-12 mb-4 mx-auto">
                         <h5 class="site-footer-title mb-3">Kurasa za Karibu</h5>
-
                         <ul class="footer-menu">
                             <li class="footer-menu-item"><a href="https://hprs.moh.go.tz" target="_blank" class="footer-menu-link">HPRS Login</a></li>
-
+                            <li class="footer-menu-item"><a href="https://nimr.or.tz" target="_blank" class="footer-menu-link">NIMR</a></li>
+                            <li class="footer-menu-item"><a href="https://www.tmda.go.tz/" target="_blank" class="footer-menu-link">TMDA</a></li>
+                            <li class="footer-menu-item"><a href="https://www.gcla.go.tz/" target="_blank" class="footer-menu-link">GCLA</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-2 col-md-6 col-12 mb-4 mx-auto">
                         <h5 class="site-footer-title mb-3">Tovuti Mashuhuri</h5>
-
                         <ul class="footer-menu">
                             <li class="footer-menu-item"><a href="https://www.moh.go.tz/" target="_blank" class="footer-menu-link">Wizara Ya Afya</a></li>
                             <li class="footer-menu-item"><a href="https://www.ikulu.go.tz/" target="_blank" class="footer-menu-link">President's Office-State House</a></li>
-                            <li class="footer-menu-item"><a href="https://hprs.moh.go.tz" target="_blank" class="footer-menu-link">HPRS Login</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12 mx-auto">
                         <h5 class="site-footer-title mb-3">ANWANI</h5>
                         <p class="text-white d-flex mb-2">
                             <i class="fa fa-location-arrow me-2"></i>
-                            Wizara ya Afya
+                            Traditional and Alternative Health Practice Council
                         </p>
                         <p class="text-white d-flex">
-
                             <i class="bi-geo-alt me-2"></i>
                             S.L.P 743, Dodoma
                         </p>
                         <p class="text-white d-flex">
                             <i class="fa fa-phone-alt me-2"></i>
-
-                            Simu: +255-26-2323267/5
+                            Simu: +255735600123
                         </p>
-
                         <p class="text-white d-flex mt-3">
                             <i class="fa fa-envelope me-2"></i>
-                            Barua pepe: ps@afya.go.tz
+                            Barua pepe: registra.tahpc@afya.go.tz, barazatibaasili@gmail.com
                         </p>
-
                     </div>
                 </div>
             </div>
-
             <div class="site-footer-bottom">
                 <div class="container">
                     <div class="row">
@@ -201,7 +373,6 @@
                         <div class="col-lg-8 col-md-7 col-12">
                             <p class="copyright-text mb-0">Hakimiliki © {{date('Y')}} TAHPC. Haki zote zimehifadhiwa.</p>
                         </div>
-
                         <div class="col-lg-4 col-md-5 col-12 d-flex justify-content-center float-lg-right mx-auto">
                             <ul class="social-icon float-lg-right">
                                 <li class="social-icon-item">
@@ -212,13 +383,11 @@
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </div>
         </footer>
     </div>
-
 </div>
 <script src="{{asset('assets/js/web/jquery.min.js')}}"></script>
 <script src="{{asset('assets/js/web/popper.min.js')}}"></script>

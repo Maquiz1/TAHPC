@@ -23,6 +23,7 @@ Artisan::command('app:load_default_user',function(){
               'last_name'=>'super',
               'gender'=>'male',
               'email'=>'superuser@gmail.com',
+              'phone'=>'0769596737',
               'password'=>Hash::make('superuser'),
               'created_at'=>Carbon::now(),
               'created_by'=>1,

@@ -24,8 +24,10 @@ return new class extends Migration
             $table->date('seen_at')->nullable();
             $table->timestamps();
             $table->string('uuid');
+            $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('seen_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

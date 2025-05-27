@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+    app:
+        build:
+            context: .
+        container_name: tiba_asili_site
+        ports:
+            - "8001:8000"
+        volumes:
+            - .:/var/www/tibaasili/tibaasiliweb
+            - laravel_storage:/var/www/tibaasili/tibaasiliweb/storage
+            - laravel_cache:/var/www/tibaasili/tibaasiliweb/bootstrap/cache
+        networks:
+            - tiba_asili_network
+        depends_on:
+            - db
+        environment:
+            - DB_CONNECTION=mysql
+            - DB_HOST=db
+            - DB_PORT=3306
+            - DB_DATABASE=tibaasili_db
+            - DB_USERNAME=root
+            - DB_PASSWORD=admin
+
+    db:
+        image: mysql:5.7
+        container_name: tiba_asili_mysql_db
+        ports:
+            - "3307:3306"
+        volumes:
+            - tiba_asili_mysql_db:/var/lib/mysql
+        networks:
+            - tiba_asili_network
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_DATABASE: tibaasili_db
+
+    nginx:
+        image: nginx:alpine
+        container_name: tiba_asili_nginx
+        ports:
+            - "9000:80"
+        volumes:
+            - ./nginx/app.conf:/etc/nginx/conf.d/default.conf
+            - .:/var/www/tibaasili/tibaasiliweb
+        networks:
+            - tiba_asili_network
+        depends_on:
+            - app
+
+volumes:
+    tiba_asili_mysql_db:
+    laravel_storage:
+    laravel_cache:
+
+networks:
+    tiba_asili_network:
+        driver: bridge

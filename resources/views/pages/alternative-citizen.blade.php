@@ -3,11 +3,11 @@
     <div class="container" id="more-details">
         <div class="row mt-5">
             <div class="col-lg-8">
-                <h5>Traditional Health Practitioner (Citizen)</h5>
+                <h5>Alternatively health practitioner (citizen)</h5>
                 <hr>
-                @if(isset($traditionalCitizen))
+                @if(isset($alternativeCitizen))
                     <p id="paragraph-content">
-                            <?= $traditionalCitizen->body ?>
+                       <?= $alternativeCitizen->body ?>
                     </p>
                 @endif
             </div>

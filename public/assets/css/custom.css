@@ -183,6 +183,9 @@
     transform: translateY(-20px);
     animation: slideIn 0.5s forwards;
 }
+.navbar-nav ul li{
+    border-bottom: 2px dotted #5bc1ac;
+}
 
 /* Add staggered animation delays for each item */
 .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }

@@ -8,8 +8,11 @@ $(document).ready(function () {
     topNavbarCallBack();
     sliderSectionCallBack();
     contentSectionCallBack();
+    contactUsCallBack();
+    $('#category-page').select2({
+        dropdownParent: $('#pages-content-section-modal') // 👈 important for dropdown to render inside modal
+    });
 });
-
 
 
 function processLink(link){
@@ -51,6 +54,28 @@ function processLink(link){
 
                 removeData(route, elementId,section,name);
             }
+        }
+    }else if(linkName === 'remove-feedback-section-data-link'){
+        let elementId = $(link).data('contentdata');
+
+        if(elementId !== ''){
+            let option = confirm('Are you sure you want to delete selected details?');
+            if(option){
+                const route = "{{route('remove-top-navbar-data')}}";
+                const section = 'contact-us';
+                const name = "contact_us";
+
+                removeData(route, elementId,section,name);
+            }
+        }
+    }else if(linkName === 'read-content-section-data-link'){
+        let elementId = $(link).data('readata');
+
+        if(elementId !== ''){
+            const route = "{{route('read-feedback')}}";
+            const htmlElementTag = "read-user-feedback";
+
+            displayHtmlData(route, elementId, htmlElementTag);
         }
     }
 }
@@ -107,23 +132,41 @@ $('#pages-content-section-form').on('submit', function (e) {
 $('#category-page').on('change', function (e) {
     let name = this.value;
     if (name !== '') {
-        if (name === 'about' || name === 'vision') {
-            $('#other-page-component-style').show('slow');
-            $('#council-member-style').hide('slow');
-        }else{
+        if (name === 'members' || name === 'team') {
             $('#other-page-component-style').hide('slow');
             $('#council-member-style').show('slow');
+        }else{
+            $('#other-page-component-style').show('slow');
+            $('#council-member-style').hide('slow');
         }
     }
 });
 
 //slider section details call back
+function contactUsCallBack(){
+    const route = "{{route('get-feedback-route')}}";
+    const htmlElementTag = "display-contact-us-details";
+    const elementKey = '';
+
+    displayHtmlData(route, elementKey, htmlElementTag);
+
+    const route1 = "{{route('feedback-count')}}";
+    const htmlElementTag1 = "display-counter";
+    displayCount(route1, elementKey, htmlElementTag1);
+}
+
+//slider section details call back
 function contentSectionCallBack(){
     const route = "{{route('get-content-section-route')}}";
+
     const htmlElementTag = "display-content-section-data";
     const elementKey = '';
 
     displayHtmlData(route, elementKey, htmlElementTag);
+
+    const route1 = "{{route('feedback-count')}}";
+    const htmlElementTag1 = "display-counter";
+    displayCount(route1, elementKey, htmlElementTag1);
 }
 
 
@@ -511,6 +554,34 @@ function displayHtmlData(route, elementKey, htmlElementTag) {
             $('#' + htmlElementTag).html('Processing...');
         },
         success: function(response) {
+            if (htmlElementTag === 'read-user-feedback'){
+                contactUsCallBack();
+            }
+            $('#' + htmlElementTag).html(response);
+        },
+        error: function(xhr, status, error) {
+            $('#' + htmlElementTag).html('');
+            try {
+                let response = JSON.parse(xhr.responseText);
+                let errorMessage = response.message;
+                alert(errorMessage);
+            } catch (e) {
+                console.error('Error parsing JSON response:', e);
+            }
+        }
+    });
+}
+
+function displayCount(route, elementKey, htmlElementTag) {
+    $.ajax({
+        url: route,
+        method: "GET",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            "elementKey": elementKey,
+        },
+        delay: 250,
+        success: function(response) {
             $('#' + htmlElementTag).html(response);
         },
         error: function(xhr, status, error) {
@@ -546,6 +617,8 @@ function removeData(route, elementKey, section, name) {
                 sliderSectionCallBack();
             }else if(section === 'content'){
                 contentSectionCallBack();
+            }else if(section === 'contact-us'){
+                contactUsCallBack();
             }
         },
         error: function(xhr, status, error) {
@@ -560,4 +633,14 @@ function removeData(route, elementKey, section, name) {
     });
 }
 
+const activePage = window.location.pathname;
+const links = document.querySelectorAll('.menu-item a');
+
+for (let i = 0; i < links.length; i++) {
+    links[i].classList.remove('is-active');
+    if (links[i].href.includes(activePage)) {
+        let menuItem = links[i].closest('.menu-item');
+        menuItem.classList.add('is-active');
+    }
+}
 </script>
