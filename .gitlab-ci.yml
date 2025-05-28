@@ -24,7 +24,7 @@ pull_changes_production_server:
         cd $dir
         git add .  # Add all changes
         git commit -m "Runner Committing local changes before pull" || echo "No changes to commit"  # Commit changes if any
-        git pull git@gitlab.com:development3123049/tibaasiliweb.git
+        git sudo pull git@gitlab.com:development3123049/tibaasiliweb.git
 
       }
 
