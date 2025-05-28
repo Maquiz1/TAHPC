@@ -1,0 +1,35 @@
+stages:
+  - pull_changes
+
+variables:
+  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+
+pull_changes_production_server:
+  stage: pull_changes
+  tags:
+    - production
+  only:
+    - production
+  before_script:
+    - eval $(ssh-agent -s)  # Start SSH agent
+    - ssh-add ~/.ssh/id_rsa  # Add private SSH key
+  script:
+    - |
+      git_pull() {
+        dir=$1
+        echo "Marking $dir as safe directory for Git"
+        git config --global --add safe.directory $dir
+
+        echo "Pulling changes for $dir"
+        cd $dir
+        git add .  # Add all changes
+        git commit -m "Runner Committing local changes before pull" || echo "No changes to commit"  # Commit changes if any
+        git pull git@gitlab.com:development3123049/tibaasiliweb.git
+
+      }
+
+      # Call the function for each directory
+      git_pull /var/www/tibaasili/tibaasiliweb
+
+  after_script:
+  # Optional: Any after-script tasks can go here, such as running composer
