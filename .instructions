@@ -1,0 +1,15 @@
+Steps to install tibaasili system backend:
+
+1.  clone repository
+2.  run composer install for development for production run composer install --optimize-autoloader --no-dev
+3.  generate app key by php artisan key:generate
+4.  configure .env file copy .env-example .env
+5.  on .env file configure database tibaasili_db with the password based on your server
+6.  migrate databases by running php artisan migrate
+7.  php artisan cache:clear
+8.  php artisan config:cache
+9. php artisan app:load_default_user
+10. Thank you.
+
+
+

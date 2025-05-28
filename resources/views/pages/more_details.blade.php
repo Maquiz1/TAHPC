@@ -5,8 +5,8 @@
        @if(isset($content) && count($content) >0)
            @php($resultsDocuments = \App\Http\Controllers\v1\AdminController::getContentMultipleDocuments($content[0]->id))
            @if($content[0]->category == 'habari')
-               <div class="row mt-5" >
-                   <div class="col-lg-5">
+               <div class="row mt-5">
+                   <div class="col-lg-5 mb-5">
                        @if(isset($resultsDocuments) && count($resultsDocuments) >0)
                            @foreach($resultsDocuments as $row)
                                @if($row->document_type == 'image')

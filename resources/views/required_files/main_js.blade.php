@@ -17,12 +17,21 @@
         document.cookie = `session_expiration=${expirationTime.toUTCString()}; path=/`;
     }
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('#login-form').on('submit', function(e){
         e.preventDefault();
         $.ajax({
             url:"{{route('auth-user')}}",
             method:"POST",
             data:$('#login-form').serialize(),
+            xhrFields: {
+                withCredentials: true
+            },
             delay:250,
             beforeSend(){
                 $('#login-btn').attr('disabled',true);

@@ -108,12 +108,15 @@ class AdminController extends Controller{
             exit();
         } else {
             $user = Auth::user();
+            session(['user' => $user]);
+
+
             if($user->status != 'active'){
                 $data = ['error' => 'Your account is not active. Please contact administrator!'];
                 echo json_encode($data);
                 exit();
             }
-            session(['user' => $user]);
+            Auth::login($user);
             $data = ['success' => 'Logged in successfully!'];
             echo json_encode($data);
         }

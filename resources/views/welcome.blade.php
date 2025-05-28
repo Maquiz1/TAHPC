@@ -5,18 +5,18 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-3 col-12 pr-5" style="text-align: left;">
-                        @if(isset($sliderProfile) && count($sliderProfile) >0)
+                        @if(isset($sliderProfile) && count($sliderProfile) >= 2)
                             <div class="frame">
                                 <img src="{{asset('storage/'.$sliderProfile[0]->value)}}" alt="Profile" />
                                 <div class="frame-banner">{{$sliderProfile[0]->name}} <br> {{$sliderProfile[0]->title}}</div>
                             </div>
                             <div class="frame">
                                 <img src="{{asset('storage/'.$sliderProfile[1]->value)}}" alt="Profile" />
-                                <div class="frame-banner">{{$sliderProfile[1]->name}} <br> {{$sliderProfile[1]->title}}</div>
+                                <div class="frame-banner">{{$sliderProfile[1]?->name}} <br> {{$sliderProfile[1]->title}}</div>
                             </div>
                         @endif
                     </div>
-                    <div class="col-lg-9 col-12 p-0">
+                    <div class="col-lg-9 col-12 p-1">
                         <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 @if(isset($sliderCarousel) && count($sliderCarousel) >0)

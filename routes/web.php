@@ -45,7 +45,6 @@ Route::get('/api/v1/tibaasili/licencing', [AdminController::class,'licencingInde
 
 
 
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/api/v1/tibaasili/admin', [AdminController::class,'index'])->name('dashboard');
     Route::get('/api/v1/tibaasili/user/feedback/admin', [AdminController::class,'contactUs'])->name('contact-us-admin');

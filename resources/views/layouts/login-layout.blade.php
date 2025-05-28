@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <link rel="stylesheet" href="{{asset('assets/css/login-css.css')}}">
     <link rel="stylesheet" href="{{asset('assets/toast/toastr.min.css')}}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 
