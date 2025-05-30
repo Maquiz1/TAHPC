@@ -12,8 +12,11 @@ pull_changes_production_server:
     - production
   before_script:
     - eval $(ssh-agent -s)
+    - echo "BASE64_STRING" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H "75.119.153.212" >> ~/.ssh/known_hosts
+
   script:
     - |
       git_pull() {
