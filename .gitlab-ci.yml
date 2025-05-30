@@ -41,7 +41,7 @@ pull_changes_production_server:
           echo "No changes to commit"
         fi
 
-        sudo git pull git@gitlab.com:development3123049/tibaasiliweb.git
+        git pull git@gitlab.com:development3123049/tibaasiliweb.git
       }
 
       git_pull /var/www/tibaasili/tibaasiliweb/
