@@ -18,6 +18,7 @@ pull_changes_production_server:
     - chmod 600 ~/.ssh/id_rsa_gitlab_ci
     - ssh-add ~/.ssh/id_rsa_gitlab_ci
     - ssh-keyscan -H "75.119.153.212" >> ~/.ssh/known_hosts
+    - ssh root@75.119.153.212 "cd /var/www/tibaasili/tibaasiliweb && git pull origin main"
 
   script:
     - |
