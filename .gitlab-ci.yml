@@ -30,5 +30,6 @@ pull_changes_production_server:
       # Call the function for each directory
       git_pull /var/www/tibaasili/tibaasiliweb/
 
+
   after_script:
-    # jj
+    # jjkkk
