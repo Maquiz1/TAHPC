@@ -1,39 +1,36 @@
-name: TibaAsiliWeb
+stages:
+  - pull_changes
 
-on:
-  push:
-    branches:
-      - production  # change to your actual deployment branch
+variables:
+  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+pull_changes_production_server:
+  stage: pull_changes
+  tags:
+    - production
+  only:
+    - production
+  before_script:
+    - eval $(ssh-agent -s)  # Start SSH agent
+    - ssh-add ~/.ssh/id_rsa  # Add private SSH key
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  script:
+    - |
+      git_pull() {
+        dir=$1
+        echo "Marking $dir as safe directory for Git"
+        git config --global --add safe.directory $dir
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, xml, bcmath, curl, mysql
-          tools: composer
+        echo "Pulling changes for $dir"
+        cd $dir
+        git add .  # Add all changes
+        git commit -m "Runner Committing local changes before pull" || echo "No changes to commit"  # Commit changes if any
+        sudo git pull git@gitlab.com:development3123049/tibaasiliweb.git
 
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+      }
 
-      - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /var/www/tibaasili/tibaasiliweb/
-            git pull origin production
-            composer install --no-dev --optimize-autoloader
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+      # Call the function for each directory
+      git_pull /var/www/tibaasili/tibaasiliweb
+
+  after_script:
+  # Optional: Any after-script tasks can go here, such as running composer
