@@ -11,8 +11,9 @@ pull_changes_production_server:
   only:
     - production
   before_script:
-    - eval $(ssh-agent -s)  # Start SSH agent
-    - ssh-add ~/.ssh/id_rsa  # Add private SSH key
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H "75.119.153.212" >> ~/.ssh/known_hosts
   script:
     - |
       git_pull() {
