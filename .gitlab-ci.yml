@@ -3,7 +3,7 @@ name: TibaAsiliWeb
 on:
   push:
     branches:
-      - production  # or 'master' if that’s your default
+      - production  # change to your actual deployment branch
 
 jobs:
   deploy:
@@ -31,7 +31,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /var/www/tibaasili/tibaasiliweb/
-            git pull origin main
+            git pull origin production
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
