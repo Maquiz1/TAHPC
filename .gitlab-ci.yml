@@ -1,41 +1,39 @@
-stages:
-  - pull_changes
+name: TibaAsiliWeb
 
-variables:
-  GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+on:
+  push:
+    branches:
+      - production  # or 'master' if that’s your default
 
-pull_changes_production_server:
-  stage: pull_changes
-  tags:
-    - production
-  only:
-    - production
-  before_script:
-    - eval $(ssh-agent -s)
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa_new
-    - chmod 600 ~/.ssh/id_rsa_new
-    - ssh-add ~/.ssh/id_rsa_new
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-  script:
-    - |
-      git_pull() {
-        dir=$1
-        echo "Marking $dir as safe directory for Git"
-        git config --global --add safe.directory $dir
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-        echo "Pulling changes for $dir"
-        cd $dir
-        git add .  # Add all changes
-        git commit -m "Runner Committing local changes before pull" || echo "No changes to commit"  # Commit changes if any
-        sudo git pull git@gitlab.com:development3123049/tibaasiliweb.git
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, bcmath, curl, mysql
+          tools: composer
 
-      }
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      # Call the function for each directory
-      git_pull /var/www/tibaasili/tibaasiliweb
-
-  after_script:
-  # Optional: Any after-script tasks can go here, such as running composer
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /var/www/tibaasili/tibaasiliweb/
+            git pull origin main
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
