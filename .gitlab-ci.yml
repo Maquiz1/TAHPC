@@ -31,4 +31,4 @@ pull_changes_production_server:
       git_pull /var/www/tibaasili/tibaasiliweb/
 
   after_script:
-  # Optional: Any after-script tasks can go here, such as running composer
+    # jj
