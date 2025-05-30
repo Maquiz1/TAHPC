@@ -7,9 +7,9 @@ variables:
 pull_changes_production_server:
   stage: pull_changes
   tags:
-    - main
+    - production
   only:
-    - main
+    - production
   before_script:
     - eval $(ssh-agent -s)  # Start SSH agent
     - ssh-add ~/.ssh/id_rsa  # Add private SSH key
