@@ -26,16 +26,21 @@ pull_changes_production_server:
         echo "Marking $dir as safe directory for Git"
         git config --global --add safe.directory $dir
 
+        echo "Fixing .git directory ownership"
+        sudo chown -R $USER:$USER $dir/.git
+
         echo "Pulling changes for $dir"
         cd $dir
-        git add .  # Add all changes
-        git commit -m "Runner Committing local changes before pull" || echo "No changes to commit"  # Commit changes if any
+
+        # Avoid unnecessary commit attempt if nothing changed
+        if ! git diff --quiet; then
+          git add .
+          git commit -m "Runner Committing local changes before pull"
+        else
+          echo "No changes to commit"
+        fi
+
         git pull git@gitlab.com:development3123049/tibaasiliweb.git
       }
 
-      # Call the function for each directory
       git_pull /var/www/tibaasili/tibaasiliweb/
-
-
-  after_script:
-    # jjkkk
