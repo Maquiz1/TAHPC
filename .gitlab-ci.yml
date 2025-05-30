@@ -13,10 +13,11 @@ pull_changes_production_server:
   before_script:
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+
   script:
     - |
       git_pull() {
