@@ -27,8 +27,8 @@ pull_changes_production_server:
         echo "Marking $dir as safe directory for Git"
         git config --global --add safe.directory $dir
 
-        echo "Fixing .git directory ownership"
-        sudo chown -R $USER:$USER $dir/.git
+      #  echo "Fixing .git directory ownership"
+      #  sudo chown -R $USER:$USER $dir/.git
 
         echo "Pulling changes for $dir"
         cd $dir
