@@ -369,7 +369,6 @@
             <div class="site-footer-bottom">
                 <div class="container">
                     <div class="row">
-
                         <div class="col-lg-8 col-md-7 col-12">
                             <p class="copyright-text mb-0">Hakimiliki © {{date('Y')}} TAHPC. Haki zote zimehifadhiwa.</p>
                         </div>
