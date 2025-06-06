@@ -17,8 +17,8 @@ pull_changes_production_server:
     - echo "$SSH_PRIVATE_KEY_CI" | base64 -d > ~/.ssh/id_rsa_gitlab_ci
     - chmod 600 ~/.ssh/id_rsa_gitlab_ci
     - ssh-add ~/.ssh/id_rsa_gitlab_ci
-    - #ssh-keyscan -H "75.119.153.212" >> ~/.ssh/known_hosts
-    - ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
+    - ssh-keyscan -H "75.119.153.212" >> ~/.ssh/known_hosts
+
 #    - ssh mulisa@75.119.153.212 "cd /var/www/tibaasili/tibaasiliweb && git pull origin main"
 
   script:
