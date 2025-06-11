@@ -531,7 +531,8 @@ strong {
   SITE HEADER
 -----------------------------------------*/
 .site-header {
-  background: var(--primary-color);
+  /*background: var(--primary-color);*/
+  background: radial-gradient(circle, green 35%, white 100%);
   padding-top: 15px;
   padding-bottom: 10px;
 }
