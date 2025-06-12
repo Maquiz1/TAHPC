@@ -261,11 +261,6 @@
                                                    aria-current="{{ request()->routeIs('traditional-medicine-shrine') ? 'page' : '' }}">
                                                     Traditional medicine Shrine
                                                 </a>
-                                                <a href="{{ route('traditional-medicine-shrine') }}"
-                                                   class="dropdown-item {{ request()->routeIs('traditional-medicine-shrine') ? 'active' : '' }}"
-                                                   aria-current="{{ request()->routeIs('traditional-medicine-shrine') ? 'page' : '' }}">
-                                                    Traditional medicine Shrine
-                                                </a>
                                                 <a href="{{ route('traditional-medicine-clinic') }}"
                                                    class="dropdown-item {{ request()->routeIs('traditional-medicine-clinic') ? 'active' : '' }}"
                                                    aria-current="{{ request()->routeIs('traditional-medicine-clinic') ? 'page' : '' }}">
