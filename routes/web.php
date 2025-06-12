@@ -35,7 +35,8 @@ Route::get('/api/v1/tibaasili/registration/alternative/medicine', [AdminControll
 Route::get('/api/v1/tibaasili/enlisting/traditional/medicine', [AdminController::class,'enlistingTraditionalMedicines'])->name('enlisting-traditional-medicines');
 Route::get('/api/v1/tibaasili/importing/medicine', [AdminController::class,'importingMedicines'])->name('importing-medicines');
 Route::get('/api/v1/tibaasili/exporting/medicine', [AdminController::class,'exportingMedicines'])->name('exporting-medicines');
-Route::get('/api/v1/tibaasili/licencing', [AdminController::class,'licencingIndex'])->name('licensing');
+Route::get('/api/v1/tibaasili/publication', [AdminController::class,'licencingIndex'])->name('licensing');
+Route::get('/api/v1/tibaasili/library', [AdminController::class,'libraryIndex'])->name('library');
 
 
 

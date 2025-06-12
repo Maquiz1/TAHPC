@@ -1396,7 +1396,30 @@ class AdminController extends Controller{
             ->where('position','=','center')
             ->get();
 
-        return view('pages.licencing', ['title'=>'Contact Us', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center]);
+        return view('pages.licencing', ['title'=>'Publication', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center]);
+    }
+
+    public function libraryIndex(Request $request){
+
+        $leftLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','left')
+            ->first();
+
+        $rightLogo = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','right')
+            ->first();
+
+        $center = DB::table('top_navbar')
+            ->select('position','data')
+            ->where('status','=','active')
+            ->where('position','=','center')
+            ->get();
+
+        return view('pages.licencing', ['title'=>'Library', 'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center]);
     }
 
 }

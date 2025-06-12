@@ -3,7 +3,7 @@
     <div class="container" id="more-details">
         <div class="row mt-5">
             <div class="col-lg-8">
-                <h4>LICENCING DETAILS</h4>
+                <h4>{{$title}}</h4>
                 <hr>
 
             </div>

@@ -3,6 +3,10 @@
         if (!localStorage.getItem('initial-authenticated')){
             window.location.href = "{{route('welcome')}}";
         }
+
+        $(".megamenu").on("click", function(e) {
+            e.stopPropagation();
+        });
     })
     //
 
