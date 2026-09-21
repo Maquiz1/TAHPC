@@ -7,7 +7,7 @@ echo "Starting Deployment for TAHPC (Laravel) on Hostinger..."
 
 # Build and start the containers in detached mode
 echo "Bringing up Docker containers..."
-docker-compose up --build -d
+docker compose up --build -d
 
 # Wait a few seconds for containers to be ready
 echo "Waiting for services to initialize..."
@@ -15,15 +15,15 @@ sleep 5
 
 # Run migrations
 echo "Running database migrations..."
-docker-compose exec app php artisan migrate --force
+docker compose exec app php artisan migrate --force
 
 # Clear and cache configurations
 echo "Caching configurations and routes..."
-docker-compose exec app php artisan cache:clear
-docker-compose exec app php artisan config:cache
+docker compose exec app php artisan cache:clear
+docker compose exec app php artisan config:cache
 
 # Load default user (based on .instructions file)
 echo "Loading default user..."
-docker-compose exec app php artisan app:load_default_user
+docker compose exec app php artisan app:load_default_user
 
 echo "Deployment completed successfully! The app should now be running on port 9000."
