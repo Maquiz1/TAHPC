@@ -30,8 +30,8 @@ services:
         networks:
             - tiba_asili_network
         environment:
-            MYSQL_ROOT_PASSWORD: '@2026@'
-            MYSQL_DATABASE: tibaasili_db
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE:-tibaasili_db}
 
     nginx:
         image: nginx:alpine
