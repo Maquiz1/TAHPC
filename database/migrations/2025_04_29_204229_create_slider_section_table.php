@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('slider_section', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->enum('position', ['profile', 'carousel'])->default('profile');
             $table->string('value');
             $table->enum('status',['active','inactive'])->default('active');

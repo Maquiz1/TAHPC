@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void {
         Schema::create('habari_mpya_documents', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->unsignedBigInteger('habari_id');
             $table->enum('document_type', ['image', 'video','document'])->default('image');
             $table->string('document_path');

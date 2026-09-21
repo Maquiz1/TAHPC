@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('habari_mpya', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->enum('category',['habari','taarifa','matukio','video','about','vision','members','team',
                 'traditional-citizen','traditional-noncitizen','alternatively-citizen','alternatively-noncitizen',
                 'massage-citizen','medicine-seller','assistant-alternative','assistant-traditional',

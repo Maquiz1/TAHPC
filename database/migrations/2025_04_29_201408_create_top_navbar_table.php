@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('top_navbar', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary()->autoIncrement();
+            $table->id();
             $table->enum('position', ['left', 'center','right'])->default('left');
             $table->string('data');
             $table->enum('status',['active','inactive'])->default('active');
