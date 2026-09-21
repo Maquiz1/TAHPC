@@ -26,4 +26,8 @@ docker compose exec app php artisan config:cache
 echo "Loading default user..."
 docker compose exec app php artisan app:load_default_user
 
+# Link storage directory for images
+echo "Linking storage directory..."
+docker compose exec app php artisan storage:link
+
 echo "Deployment completed successfully! The app should now be running on port 9000."
