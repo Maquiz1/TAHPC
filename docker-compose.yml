@@ -5,8 +5,6 @@ services:
         build:
             context: .
         container_name: tiba_asili_site
-        ports:
-            - "8001:8000"
         volumes:
             - .:/var/www/tibaasili/tibaasiliweb
             - laravel_storage:/var/www/tibaasili/tibaasiliweb/storage
