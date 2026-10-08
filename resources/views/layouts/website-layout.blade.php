@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>TAHPC - {{$title}}</title>
+    <meta name="description" content="Baraza la Tiba Asili na Tiba Mbadala (TAHPC). Official resource for Traditional Medicine and Alternative Medicine in Tanzania.">
+    <meta name="keywords" content="Tiba asili, Tiba Mbadala, Traditional medicine, alternative Medicine, Baraza la Tiba asili, Baraza la Tiba Mbadala, TAHPC">
+    <meta name="author" content="TAHPC">
+    <title>{{$title}} | Baraza la Tiba Asili na Tiba Mbadala (Traditional & Alternative Medicine)</title>
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/bootstrap-icons.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
