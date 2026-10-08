@@ -38,13 +38,32 @@ Route::get('/api/v1/tibaasili/exporting/medicine', [AdminController::class,'expo
 Route::get('/api/v1/tibaasili/publication', [AdminController::class,'licencingIndex'])->name('licensing');
 Route::get('/api/v1/tibaasili/library', [AdminController::class,'libraryIndex'])->name('library');
 
+Route::get('/sitemap.xml', function () {
+    $routes = [
+        '/',
+        '/api/v1/tibaasili/about-us',
+        '/api/v1/tibaasili/mission',
+        '/api/v1/tibaasili/council/member',
+        '/api/v1/tibaasili/management/team',
+        '/api/v1/tibaasili/contact-us',
+        '/api/v1/tibaasili/publication',
+        '/api/v1/tibaasili/library',
+    ];
 
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    foreach ($routes as $route) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . url($route) . '</loc>';
+        $xml .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
+        $xml .= '<changefreq>weekly</changefreq>';
+        $xml .= '<priority>0.8</priority>';
+        $xml .= '</url>';
+    }
+    $xml .= '</urlset>';
 
-
-
-
-
-
+    return response($xml, 200)->header('Content-Type', 'text/xml');
+});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/api/v1/tibaasili/admin', [AdminController::class,'index'])->name('dashboard');
