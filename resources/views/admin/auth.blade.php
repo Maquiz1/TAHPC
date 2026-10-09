@@ -36,9 +36,10 @@
                                 <button type="submit" name="button" id="login-btn" class="btn btn-info btn-md login_btn login-btn float-lg-right">Login</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
+                        <div class="row mt-3">
+                            <div class="col-lg-12 d-flex justify-content-between">
                                 <a href="#">Forgot password?</a>
+                                <a href="{{route('welcome')}}" class="text-info"><i class="fas fa-home"></i> Back to Home</a>
                             </div>
                         </div>
                     </form>
