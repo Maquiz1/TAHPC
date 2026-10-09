@@ -65,7 +65,7 @@ Route::get('/sitemap.xml', function () {
     return response($xml, 200)->header('Content-Type', 'text/xml');
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/api/v1/tibaasili/admin', [AdminController::class,'index'])->name('dashboard');
     Route::get('/api/v1/tibaasili/user/feedback/admin', [AdminController::class,'contactUs'])->name('contact-us-admin');
     Route::get('/api/v1/tibaasili/contactus/callback', [AdminController::class,'contactUsCallBack'])->name('get-feedback-route');

@@ -104,21 +104,19 @@ class AdminController extends Controller{
         $authenticate = auth()->attempt($request->only('email', 'password'));
         if (!$authenticate) {
             $data = ['error' => 'Wrong credentials supplied, Review your input and try again!'];
-            echo json_encode($data);
-            exit();
+            return response(json_encode($data))->header('Content-Type', 'text/html');
         } else {
             $user = Auth::user();
             session(['user' => $user]);
 
-
             if($user->status != 'active'){
+                auth()->logout();
                 $data = ['error' => 'Your account is not active. Please contact administrator!'];
-                echo json_encode($data);
-                exit();
+                return response(json_encode($data))->header('Content-Type', 'text/html');
             }
-            Auth::login($user);
+            
             $data = ['success' => 'Logged in successfully!'];
-            echo json_encode($data);
+            return response(json_encode($data))->header('Content-Type', 'text/html');
         }
     }
 
