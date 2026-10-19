@@ -426,6 +426,7 @@
                     <div class="col-lg-2 col-md-6 col-12 mb-4 mx-auto">
                         <h5 class="site-footer-title mb-3">Kurasa za Karibu</h5>
                         <ul class="footer-menu">
+                            <li class="footer-menu-item"><a href="https://live.tamris.org/" target="_blank" class="footer-menu-link">Registration/Listing of Medicines</a></li>
                             <li class="footer-menu-item"><a href="https://hprs.moh.go.tz" target="_blank" class="footer-menu-link">HPRS Login</a></li>
                             <li class="footer-menu-item"><a href="https://nimr.or.tz" target="_blank" class="footer-menu-link">NIMR</a></li>
                             <li class="footer-menu-item"><a href="https://www.tmda.go.tz/" target="_blank" class="footer-menu-link">TMDA</a></li>
