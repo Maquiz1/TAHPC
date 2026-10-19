@@ -360,13 +360,6 @@
 {{--                                    </ul>--}}
 {{--                                </li>--}}
                                 <li class="nav-item">
-                                    <a href="https://live.tamris.org/" target="_blank" rel="noopener noreferrer"
-                                       class="nav-link"
-                                       style="background-color: #2e7d32; color: #fff !important; border-radius: 4px; padding: 6px 12px; font-weight: 600; white-space: nowrap;">
-                                        <i class="fas fa-external-link-alt me-1" style="font-size: 0.8em;"></i> Registration &amp; Listing
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="{{ route('licensing') }}" @class(['nav-link', 'active' => request()->routeIs('licensing')]) aria-current="{{ request()->routeIs('licensing') ? 'page' : '' }}">
                                         Publication
                                     </a>
