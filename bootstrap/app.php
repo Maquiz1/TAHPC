@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(CorsMiddleware::class);
         $middleware->append(PreventBackButton::class);
         $middleware->append(\App\Http\Middleware\ForceHttps::class);
+        $middleware->alias(['admin' => \App\Http\Middleware\EnsureUserIsAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

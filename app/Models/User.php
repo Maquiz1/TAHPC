@@ -29,6 +29,7 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'status',
+        'role',
         'created_at',
         'updated_at',
         'created_by',
@@ -57,6 +58,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     public final static function saveLoggedInAt($user_id,$details){

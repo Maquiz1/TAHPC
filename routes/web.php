@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\v1\AdminController;
+use App\Http\Controllers\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdminController::class,'welcome'])->name('welcome');
@@ -82,6 +83,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/api/v1/tibaasili/navbar/form', [AdminController::class,'navbarForm'])->name('navbar-route');
     Route::post('/api/v1/tibaasili/top/navbar/remove', [AdminController::class,'removeData'])->name('remove-top-navbar-data');
     Route::post('/api/v1/tibaasili/logout', [AdminController::class,'logout'])->name('log-out');
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::get('/api/v1/tibaasili/users', [UserController::class,'index'])->name('users');
+        Route::get('/api/v1/tibaasili/users/callback', [UserController::class,'usersCallBack'])->name('users-callback');
+        Route::post('/api/v1/tibaasili/users/store', [UserController::class,'store'])->name('users-store');
+        Route::post('/api/v1/tibaasili/users/status', [UserController::class,'toggleStatus'])->name('users-toggle-status');
+        Route::post('/api/v1/tibaasili/users/role', [UserController::class,'toggleRole'])->name('users-toggle-role');
+        Route::post('/api/v1/tibaasili/users/password', [UserController::class,'resetPassword'])->name('users-reset-password');
+    });
 });
 
 

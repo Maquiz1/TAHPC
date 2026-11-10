@@ -55,6 +55,15 @@
                         </div>
                     </a>
                 </li>
+                @if(auth()->user() && auth()->user()->isAdmin())
+                <li class="c-menu__item menu-item" data-toggle="tooltip" title="Users">
+                    <a href="{{route('users')}}">
+                        <div class="c-menu__item__inner"><i class="fa fa-users"></i>
+                            <div class="c-menu-item__title"><span>Users</span></div>
+                        </div>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
     </div>
@@ -73,5 +82,6 @@
 
 @include('required_files.system_modals')
 @include('required_files.dashboard-js')
+@stack('scripts')
 </body>
 </html>
