@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\v1\AdminController;
 use App\Http\Controllers\v1\UserController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdminController::class,'welcome'])->name('welcome');
@@ -9,57 +10,78 @@ Route::get('/api/v1/tibaasili/login', [AdminController::class,'loginPage'])->nam
 Route::post('/api/v1/tibaasili/auth', [AdminController::class,'authUser'])->name('auth-user');
 Route::post('/api/v1/tibaasili/validate/user', [AdminController::class,'validateUser'])->name('validate-user');
 Route::post('/api/v1/tibaasili/contact-us/form', [AdminController::class,'processContactUs'])->name('contact-form');
-Route::get('/api/v1/tibaasili/more/details/{contentKey}', [AdminController::class,'moreDetailsPage'])->name('more-details');
-Route::get('/api/v1/tibaasili/about-us', [AdminController::class,'aboutUs'])->name('about-us');
-Route::get('/api/v1/tibaasili/mission', [AdminController::class,'missionIndex'])->name('mission-vision');
-Route::get('/api/v1/tibaasili/council/member', [AdminController::class,'councilMemberIndex'])->name('council-members');
-Route::get('/api/v1/tibaasili/management/team', [AdminController::class,'managementTeamIndex'])->name('management-team');
-Route::get('/api/v1/tibaasili/contact-us', [AdminController::class,'contactUsIndex'])->name('contact-us');
-Route::get('/api/v1/tibaasili/registration/traditional', [AdminController::class,'registrationIndex'])->name('traditional-citizen');
-Route::get('/api/v1/tibaasili/registration/traditional/noncitizen', [AdminController::class,'traditionalNonCitizenIndex'])->name('traditional-noncitizen');
-Route::get('/api/v1/tibaasili/registration/alternatively/citizen', [AdminController::class,'alternativelyCitizenIndex'])->name('alternatively-citizen');
-Route::get('/api/v1/tibaasili/registration/alternatively/noncitizen', [AdminController::class,'alternativelyNonCitizenIndex'])->name('alternatively-noncitizen');
-Route::get('/api/v1/tibaasili/registration/massage/citizen', [AdminController::class,'massageCitizenIndex'])->name('massage-citizen');
-Route::get('/api/v1/tibaasili/registration/traditioner/medicine/seller', [AdminController::class,'medicineSeller'])->name('traditional-medicine-seller');
-Route::get('/api/v1/tibaasili/registration/assistant/alternative', [AdminController::class,'assistantAlternativeIndex'])->name('assistant-alternatively');
-Route::get('/api/v1/tibaasili/registration/assistant/traditional', [AdminController::class,'assistantTraditionalIndex'])->name('assistant-traditional');
-Route::get('/api/v1/tibaasili/medicine/shrine', [AdminController::class,'traditionalMedicineShrineIndex'])->name('traditional-medicine-shrine');
-Route::get('/api/v1/tibaasili/medicine/clinic', [AdminController::class,'traditionalMedicineClinicIndex'])->name('traditional-medicine-clinic');
-Route::get('/api/v1/tibaasili/alternatively/medicine/clinic', [AdminController::class,'alternativelyMedicineClinicIndex'])->name('alternatively-medicine-clinic');
-Route::get('/api/v1/tibaasili/traditional/medicine/health/center', [AdminController::class,'traditionalMedicineHealthCentreIndex'])->name('traditional-medicine-health-centre');
-Route::get('/api/v1/tibaasili/alternatively/medicine/health/center', [AdminController::class,'alternativelyMedicineHealthCentre'])->name('alternatively-medicine-health-centre');
-Route::get('/api/v1/tibaasili/traditional/medicine/hospital', [AdminController::class,'traditionalMedicineHospital'])->name('traditional-medicine-hospital');
-Route::get('/api/v1/tibaasili/alternative/medicine/hospital', [AdminController::class,'alternativeMedicineHospital'])->name('alternative-medicine-hospital');
-Route::get('/api/v1/tibaasili/traditional/medicine/store', [AdminController::class,'traditionalMedicineStore'])->name('traditional-medicine-store');
-Route::get('/api/v1/tibaasili/registration/traditional/medicine', [AdminController::class,'registrationTraditionalMedicine'])->name('registration-traditional-medicine');
-Route::get('/api/v1/tibaasili/registration/alternative/medicine', [AdminController::class,'registrationAlternativeMedicine'])->name('registration-alternative-medicine');
-Route::get('/api/v1/tibaasili/enlisting/traditional/medicine', [AdminController::class,'enlistingTraditionalMedicines'])->name('enlisting-traditional-medicines');
-Route::get('/api/v1/tibaasili/importing/medicine', [AdminController::class,'importingMedicines'])->name('importing-medicines');
-Route::get('/api/v1/tibaasili/exporting/medicine', [AdminController::class,'exportingMedicines'])->name('exporting-medicines');
-Route::get('/api/v1/tibaasili/publication', [AdminController::class,'licencingIndex'])->name('licensing');
-Route::get('/api/v1/tibaasili/library', [AdminController::class,'libraryIndex'])->name('library');
+/*
+ * Public pages: [route name => [clean URL, old /api/v1/tibaasili URL, controller method]].
+ * The old URLs redirect permanently (301) so Google moves its index to the new ones.
+ */
+$publicPages = [
+    'about-us'                             => ['/about-us', 'about-us', 'aboutUs'],
+    'mission-vision'                       => ['/mission-vision', 'mission', 'missionIndex'],
+    'council-members'                      => ['/council-members', 'council/member', 'councilMemberIndex'],
+    'management-team'                      => ['/management-team', 'management/team', 'managementTeamIndex'],
+    'contact-us'                           => ['/contact-us', 'contact-us', 'contactUsIndex'],
+    'traditional-citizen'                  => ['/registration/traditional-citizen', 'registration/traditional', 'registrationIndex'],
+    'traditional-noncitizen'               => ['/registration/traditional-noncitizen', 'registration/traditional/noncitizen', 'traditionalNonCitizenIndex'],
+    'alternatively-citizen'                => ['/registration/alternative-citizen', 'registration/alternatively/citizen', 'alternativelyCitizenIndex'],
+    'alternatively-noncitizen'             => ['/registration/alternative-noncitizen', 'registration/alternatively/noncitizen', 'alternativelyNonCitizenIndex'],
+    'massage-citizen'                      => ['/registration/massage-citizen', 'registration/massage/citizen', 'massageCitizenIndex'],
+    'traditional-medicine-seller'          => ['/registration/traditional-medicine-seller', 'registration/traditioner/medicine/seller', 'medicineSeller'],
+    'assistant-alternatively'              => ['/registration/assistant-alternative', 'registration/assistant/alternative', 'assistantAlternativeIndex'],
+    'assistant-traditional'                => ['/registration/assistant-traditional', 'registration/assistant/traditional', 'assistantTraditionalIndex'],
+    'traditional-medicine-shrine'          => ['/facilities/traditional-medicine-shrine', 'medicine/shrine', 'traditionalMedicineShrineIndex'],
+    'traditional-medicine-clinic'          => ['/facilities/traditional-medicine-clinic', 'medicine/clinic', 'traditionalMedicineClinicIndex'],
+    'alternatively-medicine-clinic'        => ['/facilities/alternative-medicine-clinic', 'alternatively/medicine/clinic', 'alternativelyMedicineClinicIndex'],
+    'traditional-medicine-health-centre'   => ['/facilities/traditional-medicine-health-centre', 'traditional/medicine/health/center', 'traditionalMedicineHealthCentreIndex'],
+    'alternatively-medicine-health-centre' => ['/facilities/alternative-medicine-health-centre', 'alternatively/medicine/health/center', 'alternativelyMedicineHealthCentre'],
+    'traditional-medicine-hospital'        => ['/facilities/traditional-medicine-hospital', 'traditional/medicine/hospital', 'traditionalMedicineHospital'],
+    'alternative-medicine-hospital'        => ['/facilities/alternative-medicine-hospital', 'alternative/medicine/hospital', 'alternativeMedicineHospital'],
+    'traditional-medicine-store'           => ['/facilities/traditional-medicine-store', 'traditional/medicine/store', 'traditionalMedicineStore'],
+    'registration-traditional-medicine'    => ['/medicines/traditional-registration', 'registration/traditional/medicine', 'registrationTraditionalMedicine'],
+    'registration-alternative-medicine'    => ['/medicines/alternative-registration', 'registration/alternative/medicine', 'registrationAlternativeMedicine'],
+    'enlisting-traditional-medicines'      => ['/medicines/enlisting-traditional', 'enlisting/traditional/medicine', 'enlistingTraditionalMedicines'],
+    'importing-medicines'                  => ['/medicines/importing', 'importing/medicine', 'importingMedicines'],
+    'exporting-medicines'                  => ['/medicines/exporting', 'exporting/medicine', 'exportingMedicines'],
+    'licensing'                            => ['/publications', 'publication', 'licencingIndex'],
+    'library'                              => ['/library', 'library', 'libraryIndex'],
+];
 
-Route::get('/sitemap.xml', function () {
-    $routes = [
-        '/',
-        '/api/v1/tibaasili/about-us',
-        '/api/v1/tibaasili/mission',
-        '/api/v1/tibaasili/council/member',
-        '/api/v1/tibaasili/management/team',
-        '/api/v1/tibaasili/contact-us',
-        '/api/v1/tibaasili/publication',
-        '/api/v1/tibaasili/library',
-    ];
+foreach ($publicPages as $name => [$path, $oldPath, $method]) {
+    Route::get($path, [AdminController::class, $method])->name($name);
+    Route::permanentRedirect('/api/v1/tibaasili/' . $oldPath, $path);
+}
+
+Route::get('/news/{contentKey}', [AdminController::class,'moreDetailsPage'])->name('more-details');
+Route::get('/api/v1/tibaasili/more/details/{contentKey}', fn ($contentKey) => redirect()->route('more-details', $contentKey, 301));
+
+Route::get('/sitemap.xml', function () use ($publicPages) {
+    $urls = [['loc' => url('/'), 'lastmod' => null, 'priority' => '1.0']];
+    foreach ($publicPages as [$path]) {
+        $urls[] = ['loc' => url($path), 'lastmod' => null, 'priority' => '0.8'];
+    }
+
+    // News, announcements, events and videos posted from the dashboard.
+    $posts = DB::table('habari_mpya')
+        ->select('uuid', 'updated_at', 'created_at')
+        ->where('status', '=', 'active')
+        ->whereIn('category', ['habari', 'taarifa', 'matukio', 'video'])
+        ->orderBy('id', 'desc')
+        ->get();
+    foreach ($posts as $post) {
+        $urls[] = [
+            'loc' => route('more-details', $post->uuid),
+            'lastmod' => \Carbon\Carbon::parse($post->updated_at ?? $post->created_at)->toAtomString(),
+            'priority' => '0.6',
+        ];
+    }
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>';
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-    foreach ($routes as $route) {
-        $xml .= '<url>';
-        $xml .= '<loc>' . url($route) . '</loc>';
-        $xml .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
-        $xml .= '<changefreq>weekly</changefreq>';
-        $xml .= '<priority>0.8</priority>';
-        $xml .= '</url>';
+    foreach ($urls as $u) {
+        $xml .= '<url><loc>' . e($u['loc']) . '</loc>';
+        if ($u['lastmod']) {
+            $xml .= '<lastmod>' . $u['lastmod'] . '</lastmod>';
+        }
+        $xml .= '<priority>' . $u['priority'] . '</priority></url>';
     }
     $xml .= '</urlset>';
 

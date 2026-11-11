@@ -3,10 +3,57 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Baraza la Tiba Asili na Tiba Mbadala (TAHPC). Official resource for Traditional Medicine and Alternative Medicine in Tanzania.">
+    @php
+        $isHome = request()->routeIs('welcome');
+        $pageTitle = $isHome
+            ? 'Baraza la Tiba Asili na Tiba Mbadala (TAHPC) | Traditional and Alternative Health Practice Council'
+            : trim($title) . ' | Baraza la Tiba Asili na Tiba Mbadala (TAHPC)';
+        $pageDescription = $description ?? ($isHome
+            ? 'Tovuti rasmi ya Baraza la Tiba Asili na Tiba Mbadala (TAHPC), Tanzania. Usajili wa waganga wa tiba asili na tiba mbadala, vituo vya huduma, na dawa za asili. Official website of the Traditional and Alternative Health Practice Council.'
+            : trim($title) . ' – Baraza la Tiba Asili na Tiba Mbadala (TAHPC), Tanzania. Traditional and Alternative Health Practice Council: usajili, vituo na dawa za tiba asili na tiba mbadala.');
+        $logoUrl = asset('storage/images/council-logo.svg');
+    @endphp
+    <meta name="description" content="{{ $pageDescription }}">
     <meta name="keywords" content="Tiba asili, Tiba Mbadala, Traditional medicine, alternative Medicine, Baraza la Tiba asili, Baraza la Tiba Mbadala, TAHPC">
     <meta name="author" content="TAHPC">
-    <title>{{$title}} | Baraza la Tiba Asili na Tiba Mbadala (Traditional & Alternative Medicine)</title>
+    <title>{{ $pageTitle }}</title>
+    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="icon" href="{{ $logoUrl }}" type="image/svg+xml">
+    <meta property="og:type" content="{{ request()->routeIs('more-details') ? 'article' : 'website' }}">
+    <meta property="og:site_name" content="Baraza la Tiba Asili na Tiba Mbadala (TAHPC)">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('storage/images/Coat_of_arms_of_Tanzania.png') }}">
+    @if($isHome)
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'GovernmentOrganization',
+        'name' => 'Traditional and Alternative Health Practice Council (TAHPC)',
+        'alternateName' => ['Baraza la Tiba Asili na Tiba Mbadala', 'TAHPC'],
+        'url' => url('/'),
+        'logo' => $logoUrl,
+        'email' => 'registra.tahpc@afya.go.tz',
+        'telephone' => '+255735600123',
+        'address' => [
+            '@type' => 'PostalAddress',
+            'postOfficeBoxNumber' => '743',
+            'streetAddress' => 'Nane Nane Grounds',
+            'addressLocality' => 'Dodoma',
+            'addressCountry' => 'TZ',
+        ],
+        'parentOrganization' => [
+            '@type' => 'GovernmentOrganization',
+            'name' => 'Wizara ya Afya (Ministry of Health), Tanzania',
+            'url' => 'https://www.moh.go.tz',
+        ],
+        'sameAs' => [
+            'https://www.instagram.com/barazatibaasilitz/',
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+    @endif
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/bootstrap-icons.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
@@ -34,7 +81,7 @@
                             @endif
 
                             @if(!empty($center[1]))
-                                <h5 style="color: #ffffff;">{{ $center[1]->data }}</h5>
+                                <h1 style="color: #ffffff; font-size: var(--h5-font-size); font-weight: var(--font-weight-semibold); letter-spacing: -1px;">{{ $center[1]->data }}</h1>
                             @endif
                         </div>
                     @endif

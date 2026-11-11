@@ -600,9 +600,18 @@ class AdminController extends Controller{
                 ->get();
 
             //
-            $itemQuery = DB::table('habari_mpya')->select('habari_mpya.*')->where(['habari_mpya.uuid'=>$contentKey])->get();
+            $itemQuery = DB::table('habari_mpya')->select('habari_mpya.*')
+                ->where(['habari_mpya.uuid'=>$contentKey, 'habari_mpya.status'=>'active'])->get();
 
-            return view('pages.more_details', ['title'=>'More Details','left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,'content'=>$itemQuery]);
+            // Missing or removed posts must return 404 so Google drops them from its index.
+            if ($itemQuery->isEmpty()) {
+                abort(404);
+            }
+            $item = $itemQuery->first();
+
+            return view('pages.more_details', ['title'=>ucwords(strtolower($item->title)),
+                'description'=>Str::limit(strip_tags($item->short_description), 160),
+                'left'=>$leftLogo,'right'=>$rightLogo,'center'=>$center,'content'=>$itemQuery]);
         }
     }
 
